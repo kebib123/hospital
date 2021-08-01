@@ -49,13 +49,17 @@ class FrontpageController extends Controller
     {
         $banner = BannerModel::where('status', 1)->get();
         $resource = PostModel::where('post_type', 19)->where('post_parent', '!=', 0)->where('show_in_home', "1")->take(4)->get();
-        $service = PostModel::where('post_type', 3)->where('post_parent', '!=', 0)->where('show_in_home', "1")->take(6)->get();
-        $about = PostModel::where('id', 119)->first();
+        $service = PostModel::where('post_type', 28)->where('show_in_home', "1")->get();
+        $media = PostModel::where('post_type', 30)->where('show_in_home', "1")->take(3)->get();
+
+        $about = PostTypeModel::where('id', 27)->first();
+        $service_uri = PostTypeModel::where('id', 28)->first();
         $content = PostModel::where('post_type', 1)->where('post_parent', '=', 0)->where('show_in_home', "1")->take(6)->get();
 
-        $media = PostModel::where('post_type', 5)->where('post_parent', '!=', 0)->where('show_in_home', "1")->take(3)->get();
         $uri = PostTypeModel::where('id', 5)->first();
-        return view('themes.default.frontpage', compact('content','uri', 'media', 'about', 'banner', 'resource', 'service'));
+        $whyus = AssociatedPostModel::where(['post_id'=>'148'])->get();
+
+        return view('themes.default.frontpage', compact('whyus','service_uri', 'content', 'uri', 'media', 'about', 'banner', 'resource', 'service'));
 
     }
 
@@ -70,7 +74,7 @@ class FrontpageController extends Controller
             $data['template'] = $data['template'];
         }
         if ($data) {
-            $posts = PostModel::where('post_type', $data->id)->orderBy('id', 'desc')->get();
+            $posts = PostModel::where('post_type', $data->id)->orderBy('id', 'desc')->paginate(6);
         }
         $country = CountryModel::all();
         $related = AssociatedPostModel::where('post_id', 114)->get();
@@ -84,9 +88,10 @@ class FrontpageController extends Controller
 
             return view('themes.default.doctor-filter', compact('result'));
         }
-
+        $doctor = PostTypeModel::where('id', 29)->first();
+        $service_uri = PostTypeModel::where('id', 28)->first();
         $documents = PostDocModel::where('post_id', $data['id'])->orderBy('ordering', 'desc')->get();
-        return view('themes.default.' . $data['template'] . '', compact('category', 'data', 'documents', 'posts', 'country', 'related'));
+        return view('themes.default.' . $data['template'] . '', compact('service_uri','doctor','category', 'data', 'documents', 'posts', 'country', 'related'));
     }
 
     public function pagedetail($uri)
@@ -95,6 +100,8 @@ class FrontpageController extends Controller
             abort(404);
         }
         $data = PostModel::where('uri', $uri)->orWhere('page_key', $uri)->first();
+        $uri = explode('.', $uri);
+        $_uri = $uri[0];
         $tmpl['template'] = 'single';
         if ($tmpl['template']) {
             $data['template'] = $data['template'];
@@ -110,14 +117,23 @@ class FrontpageController extends Controller
         $data_child = PostModel::where('post_parent', $data['id'])->orderBy('post_order', 'asc')->paginate(3);
         $associated_posts = AssociatedPostModel::where('post_id', $data['id'])->get();
         $documents = PostDocModel::where('post_id', $data['id'])->orderBy('ordering', 'desc')->get();
+        $related = PostModel::where('post_type', $data['post_type'])->get();
+        $pos_type = PostTypeModel::where('id', $data->post_type)->first();
+        $service = PostModel::where('post_type', 28)->take(6)->get();
 
-        return view('themes.default.' . $data['template'] . '', compact('data', 'data_child', 'associated_posts', 'documents', 'rightsharecompany', 'taxliabilitycompany'));
+        $currentUser=PostModel::find($data->id);
+        $previous = PostModel::where('id', '<', $currentUser->id)->where('post_type','30')->select('*')->first();
+        $next = PostModel::where('id', '>', $currentUser->id)->where('post_type','30')->select('*')->first();
+        $category=PostCategoryModel::where('post_type',$data->post_type)->get();
+        return view('themes.default.' . $data['template'] . '', compact('category','previous','next','service','pos_type','related', '_uri', 'data', 'data_child', 'associated_posts', 'documents', 'rightsharecompany', 'taxliabilitycompany'));
     }
 
     public function pagedetail_child($parenturi, $uri)
     {
         $data = PostModel::where('uri', $uri)->orWhere('page_key', $uri)->first();
-
+        $currentUser=PostModel::find($data->id);
+        $previous = PostModel::where('id', '<', $currentUser->id)->where('post_type','30')->select('*')->first();
+        $next = PostModel::where('id', '>', $currentUser->id)->where('post_type','30')->select('*')->first();
         $tmpl['template'] = 'single';
         if ($tmpl['template']) {
             $data['template'] = $data['template'];
@@ -139,11 +155,11 @@ class FrontpageController extends Controller
         }
         $post_id = $data->id;
         $documents = PostDocModel::where('post_id', $data['id'])->orderBy('ordering', 'desc')->get();
-        $related = PostModel::where('post_parent', $data['post_parent'])->get();
+        $related = PostModel::where('post_type', $data['post_type'])->get();
         $pos_type = PostTypeModel::where('id', $data->post_type)->first();
+        $service = PostModel::where('post_type', 28)->take(6)->get();
 
-
-        return view('themes.default.' . $data['template'] . '', compact('pos_type', 'related', 'data', 'data_child', 'associated_posts', 'documents'));
+        return view('themes.default.' . $data['template'] . '', compact('previous','next','service', 'pos_type', 'related', 'data', 'data_child', 'associated_posts', 'documents'));
     }
 
     public function portfolio($uri)
@@ -196,13 +212,8 @@ class FrontpageController extends Controller
     public function category_navigation($uri)
     {
         $post_category = PostCategoryModel::where('uri', trim($uri))->first();
-        if ($post_category->id == 2) {
-            $data = PostModel::where(['post_category' => $post_category->id])->orderBy('post_order', 'asc')->paginate(15);
-            return view('themes.default.completed', compact('data', 'post_category'));
-        } else {
-            $data = PostModel::where(['post_category' => $post_category->id])->orderBy('post_order', 'asc')->paginate(15);
-            return view('themes.default.ongoing', compact('data', 'post_category'));
-        }
+        $posts=PostModel::where('post_category',$post_category->id)->paginate(6);
+        return view('themes.default.post_category',compact('posts') );
 
     }
 
@@ -515,7 +526,7 @@ class FrontpageController extends Controller
         if ($request->isMethod('get')) {
             $uri = $request->uri;
             if (!$uri) {
-                $doctor = PostModel::where('post_type', 26)->get();
+                $doctor = PostModel::where('post_type', 29)->get();
                 $category = PostCategoryModel::where('post_type', 26)->get();
 
                 return view('themes.default.appointment', compact('doctor', 'category'));
@@ -526,8 +537,6 @@ class FrontpageController extends Controller
                 return view('themes.default.single-appointment', compact('find', 'cat'));
 
             }
-
-
         }
         if ($request->isMethod('post')) {
             $request->validate([

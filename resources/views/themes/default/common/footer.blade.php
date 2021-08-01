@@ -1,113 +1,96 @@
-<!-- footer start -->
-<footer class="uk-position-relative uk-border-light-top">
 
-    <section class="uk-section bg-primary">
-        <div class="uk-container">
-            <!--  -->
-            <div class="uk-margin-remove-bottom   uk-grid-small uk-margin-xlarge " uk-grid
-                 uk-scrollspy="cls: uk-animation-slide-top-small; target:div,  a, li, img, p, h1;  delay: 50; repeat: false;">
-                <!--  -->
-                <div class="uk-width-auto@s uk-width-1-2  uk-width-expand@m">
-                    <h1 class="uk-h4 text-white f-w-500 uk-margin-bottom-small">Hospital</h1>
-                    <ul class="uk-list-varticle">
-                        @foreach($hospital as $value)
-                            <li><a href="{{url(geturl($value->uri))}}" class="text-white">{{$value->post_title}}</a>
-                            </li>
-                        @endforeach
+<footer class="footer">
+    <div class="footer-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-3">
+                    <div class="footer-widget-about">
+                        <h6 class="footer-widget__title">{{$about->post_type}}</h6>
+                        <p class="color-gray">
+                            {{$about->caption}}
+                        </p>
+                        <a href="{{route('appointment')}}" class="btn btn__primary btn__primary-style2 btn__link">
+                            <span>Make Appointment</span> <i class="icon-arrow-right"></i>
+                        </a>
+                    </div><!-- /.footer-widget__content -->
+                </div><!-- /.col-xl-2 -->
+                <div class="col-sm-6 col-md-6 col-lg-2 offset-lg-1">
+                    <div class="footer-widget-nav">
+                        <h6 class="footer-widget__title">Services</h6>
+                        <nav>
+                            <ul class="list-unstyled">
+                                @foreach($service->take(6) as $value)
+                                    <li>
+                                        <a href="{{ url(geturl($value['uri'], $value['page_key'])) }}">{{$value->post_title}}</a>
+                                    </li>
+                                @endforeach
 
-                    </ul>
-                </div>
-                <!--  -->
-
-                <!--  -->
-                <div class="uk-width-1-2@s  uk-width-1-2  uk-width-expand@m">
-                    <h1 class="uk-h4 text-white f-w-500 uk-margin-bottom-small">Media</h1>
-                    <ul class="uk-list-varticle">
-                        @foreach($media as $value)
-                            <li><a href="{{url(geturl($value->uri))}}" class="text-white">{{$value->post_title}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <!--  -->
-
-                <!--  -->
-                <div class="uk-width-1-2@s  uk-width-1-2  uk-width-expand@m">
-                    <h1 class="uk-h4 text-white f-w-500 uk-margin-bottom-small">Service</h1>
-                    <ul class="uk-list-varticle">
-                        @foreach($service as $value)
-                            <li><a href="{{url(geturl($value->uri))}}" class="text-white">{{$value->post_title}}</a>
-                            </li>
-                        @endforeach
-
-
-                    </ul>
-                </div>
-                <!--  -->
-
-                <div class="uk-width-1-3@s">
-                    <div class="uk-footer-box bg-white uk-border-rounded uk-box-shadow-medium uk-padding-small">
-                        <div class="uk-padding-small ">
-                            <h1 class="uk-h4 text-primary f-w-500 uk-margin-bottom-small">Contact Us</h1>
-                            <ul class="uk-list-varticle ">
-                                <li class="uk-flex uk-flex-middle"><i
-                                        class="fa fa-map-marker fa-lg uk-margin-small-right"></i> <a
-                                        href="https://www.google.com/maps/place/Chhetrapati+Free+Clinic/@27.7106654,85.306266,17z/data=!3m1!4b1!4m5!3m4!1s0x39eb18feaad6d97b:0x1836f3ec84e91853!8m2!3d27.7106607!4d85.3084547?hl=en"
-                                        target="_blank" class="text-black">
-                                        {{$setting->location1}}
-                                    </a></li>
-                                <li class="uk-flex uk-flex-middle"><i
-                                        class="fa fa-phone fa-lg uk-margin-small-right"></i>
-                                    <a href="tel:977-1- 4257911" class="text-black">{{$setting->phone}}</a>
-
-                                </li>
-                                <li class="uk-flex uk-flex-middle"><i
-                                        class="fa fa-envelope fa-lg uk-margin-small-right"></i> <a
-                                        href="mailto:{{$setting->email_primary}}"
-                                        class="text-black">{{$setting->email_primary}}</a>
-                                </li>
                             </ul>
-                            <hr>
-                            <div id="social" class="">
+                        </nav>
+                    </div><!-- /.footer-widget__content -->
+                </div><!-- /.col-lg-2 -->
+                <div class="col-sm-6 col-md-6 col-lg-2">
+                    <div class="footer-widget-nav">
+                        <h6 class="footer-widget__title">Links</h6>
+                        <nav>
+                            <ul class="list-unstyled">
+                                @foreach ($navigations as $row)
+                                    <li><a href="{{ url('page/' . posttype_url($row->uri)) }}">{{ $row->post_type }}</a>
+                                    </li>
+                                @endforeach
 
-                                <a class="facebookBtn smGlobalBtn" href="{{$setting->facebook_link}}"></a>
-                                <a class="instagramBtn smGlobalBtn" href="{{$setting->instagram_link}}"></a>
-                                <a class="twitterBtn smGlobalBtn" href="{{$setting->twitter_link}}"></a>
-                                <a class="youtubeBtn smGlobalBtn" href="{{$setting->youtube_link}}"></a>
-                                <a class="linkedinBtn smGlobalBtn" href="{{$setting->linkedin_link}}"></a>
-                            </div>
+                            </ul>
+                        </nav>
+                    </div><!-- /.footer-widget__content -->
+                </div><!-- /.col-lg-2 -->
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="footer-widget-contact">
+                        <h6 class="footer-widget__title color-heading">Contact Us</h6>
+                        <ul class="contact-list list-unstyled">
+                            <li>If you have any questions or need help, feel free to contact with our team.</li>
+                            <li>
+                                <a href="tel:01061245741" class="phone__number">
+                                    <i class="icon-phone"></i> <span>
+                                        {{$setting->phone}}
+                                          </span>
+                                </a>
+                            </li>
+                            <li class="color-body">Location: {{$setting->location1}}
+                            </li>
+                        </ul>
+                        <div class="d-flex align-items-center">
+                            <a href="{{ url('page/' . posttype_url('contact-us')) }}" class="btn btn__primary btn__link mr-30">
+                                <i class="icon-arrow-right"></i> <span>Get Directions</span>
+                            </a>
+                            <ul class="social-icons list-unstyled mb-0">
+                                <li><a href="{{$setting->facebook_link}}"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="{{$setting->instagram_link}}"><i class="fab fa-instagram"></i></a></li>
+                                <li><a href="{{$setting->twitter_link}}"><i class="fab fa-twitter"></i></a></li>
+                            </ul><!-- /.social-icons -->
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  -->
-        </div>
-    </section>
+                    </div><!-- /.footer-widget__content -->
+                </div><!-- /.col-lg-2 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.footer-primary -->
+    <div class="footer-secondary">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-sm-12  text-center">
+                    <span class="fz-14">{{$setting->copyright_text}}</span>
+                    <a class="fz-14 color-primary" href="http://cyberlink.com.np">Cyberlink Pvt. Ltd.</a>
+                </div><!-- /.col-lg-6 -->
 
-    <div class="uk-text-center text-black uk-section-xsmall uk-border-light-top bg-white"
-         uk-scrollspy="cls: uk-animation-slide-top-small; target:div, h1, p, a;  delay: 50; repeat: false;">
-        <div class="uk-container uk-text-center">
-            <div class="uk-text-small">{{$setting->copyright_text}}</div>
-        </div>
-</footer>
-<!-- footer end -->
-<!-- video modal -->
-<div id="video-modal" class="uk-flex-top">
-    <button class="uk-modal-close uk-icon uk-close uk-position-top-right text-white uk-padding" type="button"
-            uk-icon="icon: close; ratio: 2"></button>
-    <div class="uk-modal-dialog uk-margin-auto-vertical">
-    </div>
-</div>
-<!-- end video modal-->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.footer-secondary -->
+</footer><!-- /.Footer -->
 
+<button id="scrollTopBtn"><i class="fas fa-long-arrow-alt-up"></i></button>
+</div><!-- /.wrapper -->
 
-<!-- required javascript  -->
-<a href="#" id="BackToTop" uk-scroll="" uk-totop class="show">
-</a>
-<script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-<script type='text/javascript'
-        src='https://platform-api.sharethis.com/js/sharethis.js#property=6098c944a99fbf00117440b0&product=sop'
-        async='async'></script>
+<script src="{{asset('js/jquery-3.5.1.min.js')}}"></script>
+<script src="{{asset('js/plugins.js')}}"></script>
+<script src="{{asset('js/main.js')}}"></script>
 </body>
 </html>

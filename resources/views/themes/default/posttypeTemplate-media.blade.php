@@ -3,44 +3,68 @@
 @section('meta_keyword',$data->meta_keyword)
 @section('meta_description',$data->meta_description)
 @section('content')
-    <!-- banner -->
-    <section
-        class="uk-cover-container  uk-position-relative uk-flex uk-flex-middle uk-background-norepeat uk-background-cover"
-        uk-parallax="bgx: 80, 80 ;bgy: -50, -200"
-        style="background:url({{asset('uploads/original/' . $data->banner)}});">
-        <div class="uk-overlay-primary  uk-position-cover "></div>
-        <div class="uk-home-banner uk-width-1-1 uk-position-z-index">
-            <div class="uk-container uk-position-relative text-white uk-flex-middle uk-flex"
-                 uk-height-viewport="expand: true; min-height: 400;">
-                <div class="uk-width-1-1">
-                    <div class="uk-grid uk-flex-middle" uk-grid
-                         uk-scrollspy="cls: uk-animation-slide-top-small; target:div, h1, p, a;  delay: 100; repeat: false;">
-                        <div class="uk-width-1-2@l uk-width-1-1">
-                            <h1 class="f-30 f-w-600 text-white uk-margin-small">{{$data->post_type}}</h1>
+    <section class="page-title page-title-layout5 bg-primary">
 
-                        </div>
-                        <div class="uk-width-1-2@l uk-width-1-1 uk-text-right@l">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="pagetitle__heading text-white">{{$data->post_type}}</h1>
 
-                        </div>
-                    </div>
-                </div>
+                </div><!-- /.col-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.page-title -->
 
-            </div>
-        </div>
-        </div>
-        </div>
-        </div>
-    </section>
-    <!-- end banner -->
-    <!-- section -->
-    <section class="uk-section bg-white">
-        <div class="uk-container">
-          <p>
-              {!! $data->content !!}
-          </p>
+    <!-- ======================
+      Blog Grid
+    ========================= -->
+    <section class="blog-grid">
+        <div class="container">
+            <div class="row">
+                <!-- Post Item #1 -->
+                @foreach($posts as $val)
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="post-item">
+                            <div class="post__img">
+                                <a href="{{url(geturl($val->uri))}}">
+                                    <img src="{{asset('uploads/original/' . $val->page_thumbnail)}}" alt="post image"
+                                         loading="lazy">
+                                </a>
+                            </div><!-- /.post__img -->
+                            <div class="post__body">
+                                <div class="post__meta-cat">
+                                    <a href="{{route('category.navigation',loop_category($val->post_category)->uri)}}">{{loop_category($val->post_category)->category}}</a>
+                                </div><!-- /.blog-meta-cat -->
+                                <div class="post__meta d-flex">
+                                <span
+                                    class="post__meta-date">{{$val->updated_at->format('M')}} {{$val->updated_at->format('d')}}
+                                , {{$val->updated_at->format('Y')}}</span>
+                                </div>
+                                <h4 class="post__title"><a href="{{url(geturl($val->uri))}}">
+                                        {{$val->post_title}}
+                                    </a></h4>
 
-        </div>
 
-    </section>
-    <!-- section -->
+                                <a href="{{url(geturl($val->uri))}}"
+                                   class="btn btn__secondary btn__link btn__rounded">
+                                    <span>Read More</span>
+                                    <i class="icon-arrow-right"></i>
+                                </a>
+                            </div><!-- /.post__body -->
+                        </div><!-- /.post-item -->
+                    </div><!-- /.col-lg-4 -->
+                @endforeach
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <nav class="pagination-area">
+                        <ul class="pagination justify-content-center">
+                            {{$posts->links()}}
+
+                        </ul>
+                    </nav><!-- .pagination-area -->
+                </div><!-- /.col-12 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.blog Grid -->
 @stop

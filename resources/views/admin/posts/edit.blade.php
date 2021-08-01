@@ -35,25 +35,32 @@
             </div>
           </div>
         </div>
-          <?php /*?>
         <div class="form-group">
-          <label for="inputStandard" class="col-lg-2 control-label">UID</label>
+          <label for="inputStandard" class="col-lg-2 control-label">Facebook Link</label>
           <div class="col-lg-9">
             <div class="bs-component">
               <input type="text" id="" name="uid" class="form-control" value="{{$data->uid}}"  />
             </div>
           </div>
         </div>
-        <?php*/?>
 
         <div class="form-group">
-              <label class="col-lg-2 control-label" for="textArea3"> Associated Title  </label>
+              <label class="col-lg-2 control-label" for="textArea3"> Twitter Link  </label>
               <div class="col-lg-9">
                 <div class="bs-component">
                   <input type="text" class="form-control" id="" name="associated_title" value="{{$data->associated_title}}" />
                 </div>
               </div>
             </div>
+
+          <div class="form-group">
+              <label class="col-lg-2 control-label" for="textArea3"> Contact  </label>
+              <div class="col-lg-9">
+                  <div class="bs-component">
+                      <input type="text" class="form-control" id="" name="post_tags" value="{{$data->post_tags}}" />
+                  </div>
+              </div>
+          </div>
 
         <div class="form-group">
           <label for="inputSelect" class="col-lg-2 control-label"> Category </label>

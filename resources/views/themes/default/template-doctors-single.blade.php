@@ -3,45 +3,60 @@
 @section('meta_keyword',$data->meta_keyword)
 @section('meta_description',$data->meta_description)
 @section('content')<!--section-->
-<section class="uk-section bg-white uk-position-relative">
-    <div class="uk-container">
-        <div uk-grid class="uk-grid-large">
-            <div class="uk-width-1-3@m">
-                <div class="uk-media-250  uk-position-relative">
-                    <img src="{{asset('uploads/original/' . $data->page_thumbnail)}}">
-                </div>
-                <div class=" bg-white uk-box-shadow-medium uk-margin-medium-bottom">
-                    <div class="uk-padding-small">
-                        <div class="uk-padding-small">
-                            <span
-                                class="uk-display-block f-20 f-w-600 uk-margin-small-bottom text-primary">{{$data->post_title}}</span>
-                            <span class="uk-display-block f-16 uk-margin-remove">{{$data->sub_title}}</span>
-                        </div>
-                    </div>
-                    <div class="uk-border-top uk-padding-small uk-text-center">
-                        <a href="" class="uk-button  uk-button-secondary"><i class="fa fa-calendar"></i> Online
-                            Appointment</a>
-                    </div>
-                </div>
-                <div class="bg-white uk-box-shadow-medium">
-                    {{--                    <div class="uk-border-bottom uk-padding-small">--}}
-                    {{--                        <h1 class=" f-20 f-w-600 uk-margin-remove">OPD Schedule</h1>--}}
-                    {{--                    </div>--}}
-                    <div class="uk-padding-small ">
-                        <p>
-                            {!! $data->post_excerpt !!}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="uk-width-expand@m">
-                <p>
-                    {!! $data->post_content !!}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div id="uk-stop-sticky"></div>
-</section>
-<!--section end-->
+<section class="page-title page-title-layout5 bg-primary">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="pagetitle__heading text-white">{{$data->post_title}}</h1>
+
+            </div><!-- /.col-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.page-title -->
+<section class="pt-120 pb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <aside class="sidebar has-marign-right">
+                    <div class="widget widget-member">
+                        <div class="member mb-0">
+                            <div class="member__img">
+                                <img src="{{asset('uploads/original/' . $data->page_thumbnail)}}" alt="member img">
+                            </div><!-- /.member-img -->
+                            <div class="member__info">
+                                <h5 class="member__name"><a href="#">{{$data->post_title}}</a></h5>
+                                <p class="member__job">{{loop_category($data->post_category)->category}}</p>
+
+                                <div class="mt-20 d-flex flex-wrap justify-content-between align-items-center">
+                                    <ul class="social-icons list-unstyled mb-0">
+                                        <li><a href="{{$data->uid}}" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="{{$data->associated_title}}" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="{{$data->post_tags}}" class="phone"><i class="fas fa-phone-alt"></i></a></li>
+                                    </ul><!-- /.social-icons -->
+                                </div>
+                            </div><!-- /.member-info -->
+                        </div><!-- /.member -->
+                    </div><!-- /.widget-member -->
+                    <div class="widget widget-schedule">
+                        <div class="widget-content">
+                            <div class="widget__icon">
+                                <i class="icon-charity2"></i>
+                            </div>
+                           {!! $data->post_excerpt !!}
+                        </div><!-- /.widget-content -->
+                    </div><!-- /.widget-schedule -->
+
+
+
+                </aside><!-- /.sidebar -->
+            </div><!-- /.col-lg-4 -->
+            <div class="col-sm-12 col-md-12 col-lg-8">
+                <div class="text-block mb-50">
+                   {!! $data->post_content !!}
+                </div><!-- /.text-block -->
+            </div><!-- /.col-lg-8 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!--section end-->
 @stop

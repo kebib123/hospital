@@ -105,21 +105,22 @@
 
                                 <select id="template" name="icon" style="font-family: 'FontAwesome';">
                                     <option value="" selected>Choose Icon</option>
-                                    <option value="coins">&#xf1c0; COINS </option>
-                                    <option value="chart-bar">&#xf080; BAR </option>
-                                    <option value="chart-line">&#xf201; LINE </option>
-                                    <option value="newspaper">&#xf1ea; NEWSPAPER </option>
-                                    <option value="user-plus">&#xf007; USER PLUS </option>
-                                    <option value="briefcase">&#xf0b1; BRIEFCASE </option>
-                                    <option value="lightbulb">&#xf0eb; LIGHTBULB </option>
-                                    <option value="glasses">&#xf000; GLASSESS </option>
-                                    <option value="clock">&#xf017; CLOCK </option>
-                                    <option value="bullseye">&#xf140; BULLSEYE </option>
-                                    <option value="wallet">&#xf07b; WALLET </option>
-                                    <option value="star"> &#xf005; STAR</option>
-                                    <option value="handshake"> HANDSHAKE </option>
-                                    <option value="fingerprint">FINGERPRINT </option>
-
+                                    <option value="call3">&#xf095; EMERGENCY CALL </option>
+                                    <option value="calendar">&#xf133; CALENDAR </option>
+                                    <option value="health-report">&#xf15b; HEALTH REPORT </option>
+                                    <option value="heart">&#xf004; HEART-1 </option>
+                                    <option value="heart2">&#xf08a; HEART-2 </option>
+                                    <option value="heart3">&#xf21e; HEART-3 </option>
+                                    <option value="dropper">&#xf1fb; DROPPER </option>
+                                    <option value="ambulance">&#xf0f9; AMBULANCE </option>
+                                    <option value="first-aid-kit">&#xf0fa; FIRST AID KIT </option>
+                                    <option value="hospital">&#xf0f8; HOSPITAL </option>
+                                    <option value="expenses ">&#xf155; EXPENSES </option>
+                                    <option value="bandage">BANDAGE </option>
+                                    <option value="head"> HEAD </option>
+                                    <option value="microscope">MICROSCOPE </option>
+                                    <option value="drugs"> DRUGS</option>
+                                    <option value="doctor"> DOCTOR </option>
                                 </select>  <i class="arrow"></i>
 
                             </div>

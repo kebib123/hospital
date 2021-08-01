@@ -91,7 +91,7 @@ class PostController extends Controller
       $parent_post = PostModel::where(['post_type'=>$posttype_id,'post_parent'=>0])->get();
       $ord = PostModel::max('post_order');
       $post_order = $ord+1;
-      $category = PostCategoryModel::all();
+      $category = PostCategoryModel::where('post_type',$posttype_id)->get();
       return view('admin.posts.create', compact('category','parent_post','templates','templates_child','post_order'));
     }
 
@@ -294,7 +294,7 @@ class PostController extends Controller
      $posttype = $this->getPostTypeId($posttype_uri);
      $posttype_id = $posttype->id;
      $parent_post = PostModel::where(['post_type'=>$posttype_id,'post_parent'=>0])->get();
-     $category = PostCategoryModel::all();
+        $category = PostCategoryModel::where('post_type',$posttype_id)->get();
 
      $data = PostModel::find($id);
      return view('admin.posts.edit', compact('data','parent_post','templates','templates_child','category'));
